@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1"/>
+	<title>Document Search</title>
+    <link rel="stylesheet" href="{% static 'site.css' %}" type="text/css"/>
+</head>
+<body>
+
+<h1>Search Documents</h1>	
+<form action="" method="get">
+    <div>
+	{% if inp_txt %}
+	<input type="text" name="inp_txt" value="{{ inp_txt }}"/>
+	{% else %}
+	<input type="text" name="inp_txt" placeholder="Search"/>
+	{% endif %}
+	<input type="image" src="{% static 'search-icon.png' %}" alt="Search" width="48" height="48">
+	</div>
+	{% if ai_summary %}
+		<table>
+			<tr>
+			<td class="ai_summ_head"><b>AI Generated Summary</b></td>
+			{% autoescape off %}
+			<td class="ai_summ">{{ ai_summary }}</td>
+			{% endautoescape %}
+			</tr>
+		</table>
+	{% endif %}
+
+
+	{% if descr %}
+		<div>
+		<h3>{{ descr }}</h3>
+		</div>   
+	{% endif %}
+	
+	
+	{% if err %}
+		<div> <h3 style="color:#FF6133;">{{ err }}</h3> </div>
+	{% endif %}
+	
+	{% if result %}
+		<div style="overflow-x:auto;">
+		<table>
+		{% for row in result %}
+		<tr>
+			<td><a href="{{ row.0  }}" target="_blank">{{ row.0  }}</a><br/><span class="filedt">{{ row.1 }}</span></td>
+			{% autoescape off %}
+			<td>{{ row.2 }}</td>
+			{% endautoescape %}
+		</tr>
+		{% endfor %}
+		</table>
+		</div>   
+	{% endif %}
+ 
+</form>
+
+</body>
+</html>
