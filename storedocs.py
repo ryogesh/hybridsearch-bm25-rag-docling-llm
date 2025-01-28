@@ -303,7 +303,7 @@ def process_files(argsdct):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Index document fulltext and chunks with embeddings into Solr/Opensearch.",
-                                     epilog='''e.g. To index a file with all defaults run: python ./store_docs.py "/tmp/test1.pdf" , 
+                                     epilog='''e.g. To index a file with all defaults run: python ./store_docs.py "/tmp/test1.pdf" ,
                                      for all files under a folder including all subfolders run: python ./store_docs.py "/folder1/alldocsfolder/"
                                      ''')
     parser.add_argument('fl_or_fldr',
@@ -319,14 +319,12 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--tlsverify', default='n', choices={'y', 'n'},
                         help="Verify TLS certificate. Default: n")
     args = parser.parse_args()
-    argsdct = vars(args)
-
     _lgrm = getlgr("storedocs")
     _lgrft = getlgr("fulltext")
     _lgremb = getlgr("embds")
     dlgdoc = DoclingOps()
     requestsession = RequestsOps()
-    process_files(argsdct)
+    process_files(vars(args))
 
     # FT indexing is done without commit for performance.  Final commit before exiting
     try:
